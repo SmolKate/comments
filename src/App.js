@@ -1,23 +1,43 @@
-import logo from './logo.svg';
+import someImage from './some_image.jpg';
+import React from 'react';
 import './App.css';
+import NewComment from './components/NewComment';
+import CommentElement from './components/CommentElement'
 
+const comments = [
+  {
+    id: '1',
+    name: 'Kate',
+    comment: 'wow',
+  },
+  {
+    id: '2',
+    name: 'Peter',
+    comment: 'wow!!!',
+  },
+  {
+    id: '3',
+    name: 'Vova',
+    comment: 'cool!!!',
+  },
+];
 function App() {
+  let allComments = comments.map((com) => (
+    <CommentElement key={com.id} id={com.id} name={com.name} comment={com.comment} />
+  ));
+
+  const addPost = (name, comment) => {
+    console.log('name: ', name, 'comment: ', comment);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <div className='image_container'>
+        <img alt='image' src={someImage} />
+      </div>
+      <NewComment onAddComment={addPost} />
+      <div className='comments'>{allComments}</div>
+      <div>Form</div>
     </div>
   );
 }
