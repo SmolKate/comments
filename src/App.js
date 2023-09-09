@@ -31,28 +31,15 @@ function App() {
 
   const dispatch = useDispatch()
   const commentsData = useSelector((state) => state.comments.commentsData)
+  const errorData = useSelector((state) => state.comments.error)
+
   // const store = useStore()
+  console.log(errorData)
+  const getAllComments = () => {
+    dispatch(getComments())
+  }
 
-  const getAllComments = () => dispatch(getComments())
-
-
-// const getComments = () => async () => {
-//       const data = await commentsAPI.getComments()
-//       // eslint-disable-next-line no-debugger
-//       debugger
-//       console.log(data)
-//       setComments(data)
-// }
   useEffect(() => {
-    // const getComments = async () => {
-    //   const data = await commentsAPI.getComments()
-    //   // eslint-disable-next-line no-debugger
-    //   debugger
-    //   console.log(data)
-    //   setComments(data)
-    // // eslint-disable-next-line no-debugger
-    // debugger
-    // }
     getAllComments()
   }, [])
 
