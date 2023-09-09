@@ -7,22 +7,22 @@ const NewComment = withFormik({
     return {
       name: name || '',
       comment: comment || '',
-      // captcha: captcha || ''
     };
   },
   validationSchema: Yup.object().shape({
     name: Yup.string()
-      .max(10, 'Максимальное количество символов 10.')
+      .max(20, 'Максимальное количество символов 20.')
       .required('Обязательное поле'),
     comment: Yup.string()
-      .max(100, 'Максимальное количество символов 100.')
+      .max(300, 'Максимальное количество символов 300.')
       .required('Обязательное поле'),
   }),
   handleSubmit(values, { props: { onAddComment }, setSubmitting }) {
-    // props.login(values.name, values.comment, setStatus)
+    
     onAddComment(values.name, values.comment);
     values.name = '';
     values.comment = '';
+    values.captcha = '';
     setSubmitting(false);
   },
 })(NewCommentForm);

@@ -1,40 +1,22 @@
-import someImage from './some_image.jpg';
-import React, { useEffect } from 'react';
+import someImage from './city.jpg';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
 import NewComment from './components/NewComment';
 import CommentElement from './components/CommentElement';
 import { useDispatch, useSelector } from 'react-redux';
-import { getComments, addComment } from './redux/comments_reducer'
+import { getComments, addComment, actions } from './redux/comments_reducer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import axios from 'axios';
+import * as ScrollArea from '@radix-ui/react-scroll-area';
+import ReCAPTCHA from 'react-google-recaptcha'
 
-
-// const comments = [
-//   {
-//     id: '1',
-//     name: 'Kate',
-//     comment: 'wow',
-//   },
-//   {
-//     id: '2',
-//     name: 'Peter',
-//     comment: 'wow!!!',
-//   },
-//   {
-//     id: '3',
-//     name: 'Vova',
-//     comment: 'cool!!!',
-//   },
-// ];
 function App() {
 
-  // const [test, setComments] = useState()
 
   const dispatch = useDispatch()
   const commentsData = useSelector((state) => state.comments.commentsData)
   const errorData = useSelector((state) => state.comments.error)
-
+  console.log(errorData)
   // const store = useStore()
   // const getAllComments = () => {
   //   dispatch(getComments())
@@ -43,6 +25,10 @@ function App() {
   useEffect(() => {
     dispatch(getComments())
   }, [dispatch])
+
+  const secret = '6LfQ8BAoAAAAAAWx3lLEx7__Pt5dgcwzzjvmmcLD'
+  
+  const captchaRef = useRef(null)
 
   // Обработчик ошибки. При возникновении ошибки всплывает информационное окно
   const customId = "custom-id-yes";
@@ -56,6 +42,7 @@ function App() {
       position: toast.POSITION.TOP_RIGHT,
       toastId: customId
     });
+    dispatch(actions.clearErr())
   }
   if (errorData.errCode) {
     notify()
@@ -80,27 +67,59 @@ function App() {
       date={com.creationDate} />
   ));
 
-  const addPost = (name, comment) => {
-    // console.log('name: ', name, 'comment: ', comment);
+  const addPost = async (name, comment) => {
+    // if (captchaRef.current == null) {
+    //   console.log('ERROR captcha')
+    // } else {
+      // const recaptcha = captchaRef.current
+      // const token = recaptcha.getValue()
+      let token = ''
+      try {
+        token = await captchaRef.current.executeAsync();        
+        captchaRef.current.reset()
+      } catch (err) {
+        console.log('ERROR captcha')
+      }
+
+
+      // console.log(token)
+      // debugger
+
+      // captchaRef.current.reset()
+    
     const data = new Date
     const body = {
       userName: name,
       comment: comment,
-      creationDate: data
+      creationDate: data,
+      captcha: token
     }
     dispatch(addComment(body))
+    
   };
 
   return (
+    <ScrollArea.Root className="ScrollAreaRoot">
+    <ScrollArea.Viewport className="ScrollAreaViewport">
+
     <div className='container'>
       <ToastContainer autoClose={3000} theme='colored'/>
       <div className='image_container'>
         <img alt='image' src={someImage} />
       </div>
-      <NewComment onAddComment={addPost} />
+      <NewComment onAddComment={addPost}/>
+      <ReCAPTCHA ref={captchaRef} sitekey={secret} size='invisible'/>
       <div className='comments'>{allComments}</div>
-      <div>Form</div>
     </div>
+    </ScrollArea.Viewport>
+    <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical">
+      <ScrollArea.Thumb className="ScrollAreaThumb" />
+    </ScrollArea.Scrollbar>
+    <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="horizontal">
+      <ScrollArea.Thumb className="ScrollAreaThumb" />
+    </ScrollArea.Scrollbar>
+    <ScrollArea.Corner className="ScrollAreaCorner" />
+  </ScrollArea.Root>
   );
 }
 

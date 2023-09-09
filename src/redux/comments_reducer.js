@@ -2,7 +2,8 @@ import { commentsAPI } from "../api/api";
 
 export const actions = {
     getCommentsAC : (comments) => ({type: 'comments/GET_COMMENTS', comments}),
-    setError : (errCode, details) => ({type: 'comments/SET_ERROR', data: {errCode, details}})
+    setError : (errCode, details) => ({type: 'comments/SET_ERROR', data: {errCode, details}}),
+    clearErr : () => ({type: 'comments/CLEAR_ERROR'})
 }
 
 const errorHandler = (err) => dispatch => {
@@ -42,6 +43,15 @@ const commentsReducer = (state = initialState, action) => {
                 ...state,
                 error: action.data
             };
+        case 'comments/CLEAR_ERROR':
+            return {
+                ...state,
+                error: {
+                    ...state.error,
+                    errCode: null,
+                    details: null
+                }
+            };
         default:
             return state;
     }
@@ -75,3 +85,4 @@ export const deleteComment = (id) => async (dispatch) => {
         dispatch(errorHandler(err))
     }   
 }
+

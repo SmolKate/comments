@@ -15,13 +15,12 @@ const CommentElement = ({ id, name, comment, date }) => {
   }
 
   return (
-    <>
-      <div>{id}</div>
-      <div>{name}</div>
-      <div>{comment}</div>
-      <div>{creationDate}</div>
-      <button onClick={deleteHandler}>Delete</button>
-    </>
+    <div className="comment_container">
+      <div className="user_name">{name}</div>
+      <div className="comment_text">{comment}</div>
+      <div className="comment_date">{creationDate}</div>
+      <button onClick={deleteHandler}>Удалить</button>
+    </div>
   );
 };
 
