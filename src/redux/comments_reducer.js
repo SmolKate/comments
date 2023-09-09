@@ -6,11 +6,18 @@ export const actions = {
 }
 
 const errorHandler = (err) => dispatch => {
-    let details = ''
-    if (err.response.data?.error) {
-        details = err.response.data?.error
+    let details = null
+    let status = null
+    if (err.response?.data?.error) {
+        details = err.response.data.error
     }
-    dispatch(actions.setError(err.response.status, details))
+    if (err.response) {
+        status = err.response.status
+    } else {
+        status = 'Ошибка'
+        details = err.message
+    }
+    dispatch(actions.setError(status, details))
  
 }
 

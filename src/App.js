@@ -5,6 +5,8 @@ import NewComment from './components/NewComment';
 import CommentElement from './components/CommentElement';
 import { useDispatch, useSelector } from 'react-redux';
 import { getComments, addComment } from './redux/comments_reducer'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import axios from 'axios';
 
 
@@ -34,14 +36,30 @@ function App() {
   const errorData = useSelector((state) => state.comments.error)
 
   // const store = useStore()
-  console.log(errorData)
-  const getAllComments = () => {
-    dispatch(getComments())
-  }
+  // const getAllComments = () => {
+  //   dispatch(getComments())
+  // }
 
   useEffect(() => {
-    getAllComments()
-  }, [])
+    dispatch(getComments())
+  }, [dispatch])
+
+  // Обработчик ошибки. При возникновении ошибки всплывает информационное окно
+  const customId = "custom-id-yes";
+  const notify = () => {
+    let info = 'Что-то пошло не так. Попробуйте позже.'
+    if (errorData.details && errorData.details.length !== 0) {
+      info = errorData.details
+    }
+    const text = `${errorData.errCode}: ${info}`
+    toast.error(text, {
+      position: toast.POSITION.TOP_RIGHT,
+      toastId: customId
+    });
+  }
+  if (errorData.errCode) {
+    notify()
+  }
 
   const reversedData = commentsData?.sort((a, b) => {
     const dateA = a.creationDate; 
@@ -63,7 +81,7 @@ function App() {
   ));
 
   const addPost = (name, comment) => {
-    console.log('name: ', name, 'comment: ', comment);
+    // console.log('name: ', name, 'comment: ', comment);
     const data = new Date
     const body = {
       userName: name,
@@ -75,6 +93,7 @@ function App() {
 
   return (
     <div className='container'>
+      <ToastContainer autoClose={3000} theme='colored'/>
       <div className='image_container'>
         <img alt='image' src={someImage} />
       </div>
