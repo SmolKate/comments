@@ -6,6 +6,7 @@ export const actions = {
     clearErr : () => ({type: 'comments/CLEAR_ERROR'})
 }
 
+// Обработчик ошибок с сервера, который преобразует их и сохраняет в state
 const errorHandler = (err) => dispatch => {
     let details = null
     let status = null
@@ -19,7 +20,6 @@ const errorHandler = (err) => dispatch => {
         details = err.message
     }
     dispatch(actions.setError(status, details))
- 
 }
 
 let initialState = {
@@ -59,6 +59,7 @@ const commentsReducer = (state = initialState, action) => {
 
 export default commentsReducer;
 
+// Получение данных о комментариях и сохранение их в state
 export const getComments = () => async (dispatch) => {
     try {
         const data = await commentsAPI.getComments()
@@ -68,6 +69,7 @@ export const getComments = () => async (dispatch) => {
     } 
 }
 
+// Добавление нового комментария и обновление данных о комментариях в state
 export const addComment = (body) => async (dispatch) => {
     try {
         await commentsAPI.postComment(body)
@@ -77,6 +79,7 @@ export const addComment = (body) => async (dispatch) => {
     }
 }
 
+// Удаление комментария и обновление данных о комментариях в state
 export const deleteComment = (id) => async (dispatch) => {
     try {
         await commentsAPI.deleteComment(id)

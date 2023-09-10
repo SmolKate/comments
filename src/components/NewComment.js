@@ -2,6 +2,11 @@ import NewCommentForm from './NewCommentForm';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
+/*
+    Контейнер для формы, содержащий схему валидации, обработчик сохранения формы
+    и первоначальные значения для формы
+*/
+
 const NewComment = withFormik({
   mapPropsToValues({ name, comment }) {
     return {

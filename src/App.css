@@ -2,11 +2,15 @@
 @import '@radix-ui/colors/mauve.css';
 @import '@radix-ui/colors/violet.css';
 
+/* Стиль основного контейнера */
+
 .container {
   min-height: 100vh;
   padding: 40px;
   background-color: rgb(200, 187, 206);
 }
+
+/* Стили для отображения изображения */
 
 .image_container {
   width: 400px;
@@ -22,6 +26,7 @@
   height: 100%;
   object-fit: cover;
 }
+/* Стили для формы */
 
 .form {
   width: 380px;
@@ -70,6 +75,9 @@ input:focus, textarea:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+/* Стили для отображения комментариев */
+
 .comment_container {
   width: 380px;
   padding: 10px;
@@ -114,28 +122,15 @@ button:focus {
   box-shadow: 0 0 0 2px rgb(148, 144, 150);
 }
 
-
-/* .btn button {
-  width: 100%;
-  visibility: hidden;
-  position: relative;
-
-} */
-
-
 .user_name {
   width: 100%;
-
   font-weight: bolder;
-
   grid-area: name;
 }
 
 .comment_text {
   width: 100%;
-
   word-wrap: break-word;
-
   grid-area: text;
 }
 
@@ -148,40 +143,7 @@ button:focus {
 
 }
 
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+/*  Стили для бокового и нижнего скролов  */
 
 .ScrollAreaRoot {
   width: 100vw;

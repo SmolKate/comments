@@ -6,16 +6,15 @@ const instance = axios.create({
 })
 
 export const commentsAPI = {
-    async getComments () {
+    async getComments () {      // запрос данных обо всех комментариях
         const response = await instance.get('/comments');
         return response.data;
     },
-    async postComment (body) {
+    async postComment (body) {  // запрос на сохранение нового комментария
         const response = await instance.post('/comments', body);
         return response.data;
     },
-    async deleteComment (id) {
-        // console.log(id)
+    async deleteComment (id) {  // запрос на удаление комментария
         const response = await instance.delete(`/comments/${id}`);
         return response.data;
     },

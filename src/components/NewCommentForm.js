@@ -2,6 +2,10 @@ import { Form, Field } from 'formik';
 import React from 'react';
 import './../App.css';
 
+/*
+    Форма для добавления нового комментария
+*/
+
 const NewCommentForm = ({ errors, touched, status }) => {
 
   return (
@@ -16,12 +20,6 @@ const NewCommentForm = ({ errors, touched, status }) => {
         {touched.comment && errors.comment && <div className='errorMsg'>{errors.comment}</div>}
       </div>
       <div className={errors.comment || errors.name ? "errorMsgBtn" : ''}>  
-      {/* <ReCAPTCHA ref={captchaRef} sitekey={secret} size='invisible'/> */}
-
-        {/* {!!props.captchaUrl && <div>
-                        <div><img src={props.captchaUrl}/></div>
-                        <div><Field name='captcha' type='text' placeholder='input code' /></div> 
-                </div>} */}
         <button type='submit'>Добавить комментарий</button>
       </div>
     </Form>
