@@ -23,7 +23,6 @@ const NewComment = withFormik({
       .required('Обязательное поле'),
   }),
   handleSubmit(values, { props: { onAddComment }, setSubmitting }) {
-    
     onAddComment(values.name, values.comment);
     values.name = '';
     values.comment = '';
